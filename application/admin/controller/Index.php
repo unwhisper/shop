@@ -1,12 +1,12 @@
 <?php
 namespace app\admin\controller;
 
-use think\Controller;
+use app\admin\controller\Common;
 use think\captcha\Captcha;
-use app\admin\logic\LogicIndex;
+use app\admin\server\IndexServer;
 use think\facade\Request;
 
-class Index extends Controller
+class Index extends Common
 {
     public function index()
     {
@@ -18,11 +18,14 @@ class Index extends Controller
         if ($request::isPost()){
             $info = $request::post();
             $verify = $info['verify'];
-            if ($this->checkCode($verify)){
+            if (captcha_check($verify)){
                 $username = $request::post('username');
                 $password = $request::post('password');
-                $logic = new LogicIndex();
-                return json($logic->login($username,$password));
+                $rember = $request::post('rember');
+                $server = new IndexServer();
+                return json($server->login($username,$password,$rember));
+            }else{
+                return json(ajax_return(0,'验证码错误'));
             }
         }
         return $this->fetch();
@@ -32,13 +35,5 @@ class Index extends Controller
     {
         $captcha = new Captcha();
         return $captcha->entry();
-    }
-
-    public function checkCode($code)
-    {
-        if (!captcha_check($code)){
-            $this->error('验证码错误');
-        }
-        return true;
     }
 }

@@ -3460,7 +3460,7 @@ $.widget( "ui.droppable", {
 		};
 	},
 
-	// Extension points just to make backcompat sane and avoid duplicating logic
+	// Extension points just to make backcompat sane and avoid duplicating server
 	// TODO: Remove in 1.13 along with call to it below
 	_addHoverClass: function() {
 		this._addClass( "ui-droppable-hover" );
@@ -12539,7 +12539,7 @@ $.widget( "ui.dialog", {
 		}
 
 		// TODO: Remove hack when datepicker implements
-		// the .ui-front logic (#8989)
+		// the .ui-front server (#8989)
 		return !!$( event.target ).closest( ".ui-datepicker" ).length;
 	},
 
