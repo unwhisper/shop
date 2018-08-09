@@ -1,12 +1,12 @@
 <?php
 namespace app\admin\controller;
 
-use app\admin\controller\Common;
+use think\Controller;
 use think\captcha\Captcha;
 use app\admin\server\IndexServer;
 use think\facade\Request;
 
-class Index extends Common
+class Index extends Controller
 {
     public function index()
     {
@@ -29,6 +29,13 @@ class Index extends Common
             }
         }
         return $this->fetch();
+    }
+
+    public function logout()
+    {
+        $server = new IndexServer();
+        $server->logout();
+        $this->success('退出成功',"admin/Index/login");
     }
 
     public function verify()

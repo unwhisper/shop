@@ -41,4 +41,10 @@ class IndexServer
         }
         return ajax_return(1,'登录成功');
     }
+
+    //登出
+    public function logout()
+    {
+        SC::delLoginSession();
+    }
 }
