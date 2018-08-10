@@ -89,9 +89,9 @@ class RedisServer
         elseif( time() > static::$_instance[$k]->expireTime)
         {
             static::$_instance[$k]->close();
-            static::$_instance[$k]         =     new self($config,$attr);
-            static::$_instance[$k]->k    =    $k;
-            static::$_instance[$k]->dbId=    $attr['db_id'];
+            static::$_instance[$k] = new self($config,$attr);
+            static::$_instance[$k]->k = $k;
+            static::$_instance[$k]->dbId = $attr['db_id'];
 
             //如果不是0号库，选择一下数据库。
             if($attr['db_id']!=0){
