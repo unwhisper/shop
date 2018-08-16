@@ -9,6 +9,7 @@ Route::group('admin',function (){
     Route::rule('','admin/Index/index');
     Route::rule('login','admin/Index/login');
     Route::rule('verify','admin/Index/verify');
+    Route::rule('test','admin/Index/test');
 });
 
 return [

@@ -35,9 +35,12 @@ class IndexServer
         SC::setUserRoleSession($admin->adminRole->role_name);
         $ip = get_real_ip();
         Admin::where('user_name',$username)->update(['last_login' => time(),'last_ip' => $ip]);
-        if ($rember == 'on'){
+        if ($rember == 'on' && !Cookie::has('rember')){
             Cookie::set('username',$username,3600*24*30);
             Cookie::set('password',$password,3600*24*30);
+            Cookie::set('rember','on',3600*24*30);
+        }elseif($rember == ''){
+            Cookie::clear('shop_');
         }
         return ajax_return(1,'登录成功');
     }

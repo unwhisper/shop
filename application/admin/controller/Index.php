@@ -13,6 +13,11 @@ class Index extends Controller
         return $this->fetch();
     }
 
+    public function test()
+    {
+        return $this->fetch();
+    }
+
     public function login(Request $request)
     {
         if ($request::isPost()){

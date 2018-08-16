@@ -35,5 +35,6 @@ return [
     //替换输出
     'tpl_replace_string'  =>  [
         '__STATIC__'=> '/static',
+        '__EDITOR__'=> '/editor',
     ]
 ];
