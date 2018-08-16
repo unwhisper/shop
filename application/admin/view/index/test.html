@@ -201,7 +201,14 @@ layui.use(['element','layer','form'], function(){
     <button id="toc-menu-btn">ToC Dropdown menu</button>
     <button id="toc-default-btn">ToC default</button>
   </div>
-  <div id="test-editormd"></div>
+
+    <label>标题　</label>
+    <input type="text" name="title" placeholder="请输入标题"><br/>
+    <label>关键词</label>
+    <input type="text" name="keywords" placeholder="请输入关键词，用逗号隔开"><br/>
+    <label>正文</label>
+    <div id="test-editormd"></div><br/>
+    <input type="button" id="sub" value="提交">
 </div>
 <script src="__EDITOR__/examples/js/jquery.min.js"></script>
 <script src="__EDITOR__/editormd.js"></script>
@@ -215,9 +222,9 @@ layui.use(['element','layer','form'], function(){
                 width: "90%",
                 height: 740,
                 path : '__EDITOR__/lib/',
-                theme : "default",
-                previewTheme : "default",
-                editorTheme : "default",
+                theme : "dark",
+                previewTheme : "dark",
+                editorTheme : "pastel-on-dark",
                 markdown : md,
                 codeFold : true,
                 //syncScrolling : false,
@@ -304,6 +311,40 @@ layui.use(['element','layer','form'], function(){
 
         $("#toc-default-btn").click(function() {
             testEditor.config("tocDropdown", false);
+        });
+
+        $("#sub").click(function () {
+           var title = $("input[name='title']").val();
+           var keywords = $("input[name='keywords']").val();
+           var zhengwen = testEditor.getHTML();
+           if (title == '') {
+               alert('标题不能为空！');
+               return false;
+           }
+           if (keywords == ''){
+               alert('关键词不能为空！');
+               return false;
+           }
+           if (zhengwen == ''){
+               alert('正文不能为空');
+               return false;
+           }
+            $.ajax({
+                url:"{:url('admin/Index/test')}?t="+Math.random(),
+                type:'post',
+                dataType:'json',
+                data:{title:title,keywords:keywords,zhengwen:zhengwen},
+                success:function(res){
+                    if(res.status == 1){
+                        alert(res.msg);
+                    }else{
+                        alert(res.msg);
+                    }
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert('网络失败，请刷新页面后重试');
+                }
+            })
         });
     });
 </script>

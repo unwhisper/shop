@@ -3,6 +3,7 @@ namespace app\admin\server;
 
 use app\model\Admin;
 use app\model\AdminRole;
+use app\model\Article;
 use think\facade\Cookie;
 use SC;
 
@@ -49,5 +50,15 @@ class IndexServer
     public function logout()
     {
         SC::delLoginSession();
+    }
+
+    public function test($info)
+    {
+        $res = Article::create($info);
+        if ($res){
+            return ajax_return(1,'添加成功');
+        }else{
+            return ajax_return(0,'添加失败');
+        }
     }
 }

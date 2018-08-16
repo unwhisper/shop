@@ -13,8 +13,13 @@ class Index extends Controller
         return $this->fetch();
     }
 
-    public function test()
+    public function test(Request $request)
     {
+        if ($request::isPost()){
+            $info = $request::post();
+            $server = new IndexServer();
+            return json($server->test($info));
+        }
         return $this->fetch();
     }
 
