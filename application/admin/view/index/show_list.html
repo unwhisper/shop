@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        list</title>
+</head>
+<body>
+{volist name="list" id="vo"}
+<a href="{:url('admin/Index/showArticle',array('id'=>$vo['id']))}">{$vo.title}</a><br/>
+{/volist}
+</body>
+</html>

@@ -61,4 +61,34 @@ class IndexServer
             return ajax_return(0,'添加失败');
         }
     }
+
+    public function getList($id)
+    {
+        $res = Article::where('admin_id',$id)->select();
+        if ($res){
+            return $res->toArray();
+        }else{
+            return false;
+        }
+    }
+
+    public function getarticle($id)
+    {
+        $info = Article::get($id);
+        if ($info){
+            return $info->toArray();
+        }else{
+            return false;
+        }
+    }
+
+    public function updateArticle($id,$article)
+    {
+        $res = Article::where('id',$id)->update($article);
+        if ($res){
+            return ajax_return(1,'修改成功');
+        }else{
+            return ajax_return(0,'修改失败');
+        }
+    }
 }

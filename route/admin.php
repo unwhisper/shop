@@ -10,6 +10,9 @@ Route::group('admin',function (){
     Route::rule('login','admin/Index/login');
     Route::rule('verify','admin/Index/verify');
     Route::rule('test','admin/Index/test');
+    Route::rule('change','admin/Index/change');
+    Route::rule('showarticle/id/:id','admin/Index/showArticle');
+    Route::rule('showlist','admin/Index/showList');
 });
 
 return [

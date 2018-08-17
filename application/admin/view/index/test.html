@@ -224,16 +224,12 @@ layui.use(['element','layer','form'], function(){
                 path : '__EDITOR__/lib/',
                 theme : "default",
                 previewTheme : "default",
-                editorTheme : "3024-day",
+                editorTheme : "default",
                 markdown : md,
                 codeFold : true,
-                //syncScrolling : false,
-                saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+                //saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
                 searchReplace : true,
-                //watch : false,                // 关闭实时预览
                 htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启
-                //toolbar  : false,             //关闭工具栏
-                //previewCodeHighlight : false, // 关闭预览 HTML 的代码块高亮，默认开启
                 emoji : true,
                 taskList : true,
                 tocm : true,         // Using [TOCM]
@@ -254,7 +250,7 @@ layui.use(['element','layer','form'], function(){
                     //this.unwatch();
                     //this.watch().fullscreen();
 
-                    this.setMarkdown("[TOC]");
+                    //this.setMarkdown("[TOC]");
                     //this.width("100%");
                     //this.height(480);
                     this.resize("90%", 740);
@@ -320,7 +316,8 @@ layui.use(['element','layer','form'], function(){
     function checkSubmit() {
             var title = $("input[name='title']").val();
             var keywords = $("input[name='keywords']").val();
-            var zhengwen = testEditor.getHTML();
+            var zhengwen = testEditor.getPreviewedHTML();
+            var mark = testEditor.getMarkdown();
             if (title == '') {
                 alert('标题不能为空！');
                 return false;
@@ -337,7 +334,7 @@ layui.use(['element','layer','form'], function(){
                 url:"{:url('admin/Index/test')}?t="+Math.random(),
                 type:'post',
                 dataType:'json',
-                data:{title:title,keywords:keywords,zhengwen:zhengwen},
+                data:{title:title,keywords:keywords,zhengwen:zhengwen,mark:mark},
                 success:function(res){
                     if(res.status == 1){
                         alert(res.msg);

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8" />
+    <title>Full example - Editor.md examples</title>
+    <link rel="stylesheet" href="__EDITOR__/examples/css/style.css" />
+    <link rel="stylesheet" href="__EDITOR__/css/editormd.css" />
+</head>
+<body>
+<div style="display: block; width: 1000px; top: 42px;margin: 0 auto;">
+    <div class="markdown-body editormd-preview-container" id="article" style="padding: 20px;">
+
+    </div>
+    <div id="hidden" hidden>{$article.zhengwen}</div>
+</div>
+</body>
+<script src="__EDITOR__/examples/js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var textContent = $("#hidden").text();
+        $("#article").html(textContent);
+    });
+</script>
+</html>
