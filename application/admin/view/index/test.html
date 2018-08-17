@@ -187,7 +187,7 @@ layui.use(['element','layer','form'], function(){
 </head>
 <body>
 <div id="layout">
-  <div class="btns">
+  <!--<div class="btns">
     <button id="show-btn">显示编辑器</button>
     <button id="hide-btn">隐藏编辑器</button>
     <button id="get-md-btn">Get Markdown</button>
@@ -200,7 +200,7 @@ layui.use(['element','layer','form'], function(){
     <button id="close-toolbar-btn">隐藏工具栏</button>
     <button id="toc-menu-btn">ToC Dropdown menu</button>
     <button id="toc-default-btn">ToC default</button>
-  </div>
+  </div>-->
 
     <label>标题　</label>
     <input type="text" name="title" placeholder="请输入标题"><br/>
@@ -222,9 +222,9 @@ layui.use(['element','layer','form'], function(){
                 width: "90%",
                 height: 740,
                 path : '__EDITOR__/lib/',
-                theme : "dark",
-                previewTheme : "dark",
-                editorTheme : "pastel-on-dark",
+                theme : "default",
+                previewTheme : "default",
+                editorTheme : "3024-day",
                 markdown : md,
                 codeFold : true,
                 //syncScrolling : false,
@@ -248,17 +248,17 @@ layui.use(['element','layer','form'], function(){
                 imageUpload : true,
                 imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
                 imageUploadURL : "{:url('admin/Upload/upload')}",
-                /*onload : function() {
-                    console.log('onload', this);
+                onload : function() {
+                    //console.log('onload', this);
                     //this.fullscreen();
                     //this.unwatch();
                     //this.watch().fullscreen();
 
-                    //this.setMarkdown("#PHP");
+                    this.setMarkdown("[TOC]");
                     //this.width("100%");
                     //this.height(480);
-                    //this.resize("100%", 640);
-                }*/
+                    this.resize("90%", 740);
+                }
             });
         });
 
@@ -312,23 +312,27 @@ layui.use(['element','layer','form'], function(){
         $("#toc-default-btn").click(function() {
             testEditor.config("tocDropdown", false);
         });
-
         $("#sub").click(function () {
-           var title = $("input[name='title']").val();
-           var keywords = $("input[name='keywords']").val();
-           var zhengwen = testEditor.getHTML();
-           if (title == '') {
-               alert('标题不能为空！');
-               return false;
-           }
-           if (keywords == ''){
-               alert('关键词不能为空！');
-               return false;
-           }
-           if (zhengwen == ''){
-               alert('正文不能为空');
-               return false;
-           }
+            checkSubmit();
+        });
+
+    });
+    function checkSubmit() {
+            var title = $("input[name='title']").val();
+            var keywords = $("input[name='keywords']").val();
+            var zhengwen = testEditor.getHTML();
+            if (title == '') {
+                alert('标题不能为空！');
+                return false;
+            }
+            if (keywords == ''){
+                alert('关键词不能为空！');
+                return false;
+            }
+            if (zhengwen == ''){
+                alert('正文不能为空');
+                return false;
+            }
             $.ajax({
                 url:"{:url('admin/Index/test')}?t="+Math.random(),
                 type:'post',
@@ -345,8 +349,12 @@ layui.use(['element','layer','form'], function(){
                     alert('网络失败，请刷新页面后重试');
                 }
             })
-        });
-    });
+    }
+   /* $(document).keyup(function (event) {
+                if (event.keyCode == 13){
+                    checkSubmit();
+                }
+    });*/
 </script>
 </body>
 </html>
