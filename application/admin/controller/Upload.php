@@ -27,7 +27,11 @@ class Upload
         error_reporting(E_ALL & ~E_NOTICE);
 
         $path     = env('root_path');
-        $savePath = realpath($path . 'public/static/upload/product') . DIRECTORY_SEPARATOR;
+        $dir = $path . 'public/static/upload/product';
+        if(!is_dir($dir)){
+            mkdir($dir,0777,true);
+        }
+        $savePath = realpath($dir) . DIRECTORY_SEPARATOR;
         $saveURL  = '/static/upload/product/';
 
         //文件允许格式

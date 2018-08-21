@@ -91,4 +91,27 @@ class IndexServer
             return ajax_return(0,'修改失败');
         }
     }
+
+    public function updateLogo($admin_id,$base64_image_content)
+    {
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)) {
+            $type = $result[2];
+            $new_file = "./static/upload/logo/";
+            if (!file_exists($new_file)) {
+                //检查是否有该文件夹，如果没有就创建，并给予最高权限
+                mkdir($new_file, 0777,true);
+            }
+            $img=hash('sha1',time().rand(11111,99999)) . "." .$type;
+            $new_file = $new_file . $img;
+            //将图片保存到指定的位置
+            if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))) {
+                Admin::where('admin_id',$admin_id)->update(array('logo'=>$new_file));
+                return ajax_return(0,$new_file);
+            }else{
+                return ajax_return(1,'上传失败');
+            }
+        }else{
+            return ajax_return(1,'请选择图片');
+        }
+    }
 }

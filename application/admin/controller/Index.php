@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 
+use app\common\controller\RedisServer;
 use think\Controller;
 use think\captcha\Captcha;
 use app\admin\server\IndexServer;
@@ -23,6 +24,14 @@ class Index extends Controller
     public function index()
     {
         return $this->fetch();
+    }
+
+    public function updateLogo(Request $request)
+    {
+        $admin_id = $this->admin_id;
+        $img = $request::post('imgData');
+        $result = $this->server->updateLogo($admin_id,$img);
+        return json($result);
     }
 
     public function test(Request $request)

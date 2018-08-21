@@ -12,6 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="__STATIC__/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="__STATIC__/css/seller_center.css" />
 		<link rel="stylesheet" type="text/css" href="__STATIC__/css/simple.switch.three.css" />
+		<link href="./cropper/css/cropper.min.css" rel="stylesheet">
 		<style>
 		.wrapper{width:1268px;}
 		.help-block{color:red;}
@@ -19,6 +20,35 @@
 		.ncsc-path a{text-decoration:none;}
 		.is-upgrade{width: 7px;height: 7px;background: red;border-radius: 50%;position: absolute;z-index: 5;bottom: 9px;display: none;}
 		.modal-header:hover{cursor: move;}
+		body {
+			text-align: center;
+		}
+		.modal-content{
+			width:500px;
+			margin:0 auto;
+		}
+		#photo {
+			max-width:100%;
+			max-height:281px;
+		}
+		.img-preview-box {
+			text-align: center;
+		}
+		.img-preview-box > div {
+			display: inline-block;;
+			margin-right: 10px;
+		}
+		.img-preview {
+			overflow: hidden;
+		}
+		.img-preview-box .img-preview-lg {
+			width: 150px;
+			height: 150px;
+		}
+		.img-preview-box .img-preview-md {
+			width: 100px;
+			height: 100px;
+		}
 		</style>
 		<script src="__STATIC__/js/jquery-1.8.1.min_1.js"></script>
 		<script src="__STATIC__/js/bootstrap_1.js"></script>
@@ -31,16 +61,9 @@
 		<script src="__STATIC__/js/load_bottom.js" type="text/javascript"></script>
 		<script src="__STATIC__/js/jquery-ui.min.js"></script>
 		<script src="__STATIC__/js/ns_tool.js"></script>
+		<script src="./cropper/js/cropper.min.js"></script>
 		<script>
 	/**
-	 * 六星开源商城系统 - 团队十年电商经验汇集巨献!
-	 * ========================================================= Copy right
-	 * 2015-2025 湖南六星教育网络科技有限公司, 保留所有权利。
-	 * ---------------------------------------------- 官方网址:
-	 * http://www.sixstaredu.com 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和使用。
-	 * 任何企业和个人不允许对程序代码以任何形式任何目的再发布。
-	 * =========================================================
-	 * 
 	 * @author : 小学生Pack老师
 	 * @date : 2016年12月16日 16:17:13
 	 * @version : v1.0.0.0 商品发布中的第二步，编辑商品信息
@@ -82,8 +105,8 @@ var admin_main = "http://tp.23673.com/admin";
 	<div class="wrapper">
 		<div class="ncsc-admin">
 			<div class="ncsc-admin-headimg">
-							<img src="__STATIC__/picture/default_user_portrait.gif"/>
-						</div>
+				<img id="user-photo" src="__STATIC__/picture/default_user_portrait.gif"/>
+			</div>
 			<span class="user-name ncsc-admin-info" data-toggle="dropdown"></span>
 			<a class="ncsc-admin-a ncsc-admin-info" data-toggle="dropdown"><i class="ncsc-admin-i ncsc-admin-down"></i></a>
 			<a class="ncsc-admin-a h40"><i class="ncsc-admin-line"></i></a>
@@ -91,7 +114,46 @@ var admin_main = "http://tp.23673.com/admin";
 			<a class="ncsc-admin-a" href="{:url('admin/Index/logout')}" title="安全退出管理中心"><i class="ncsc-admin-i ncsc-admin-off"></i></a>
 			<div class="user-operation dropdown-menu">
 				<a href="javascript:;" title="修改密码" onclick="editpassword()"><i class="fa fa-wrench"></i>修改密码</a>
+				<a href="javascript:;" title="修改头像" data-target="#changeModal" data-toggle="modal"><i class="fa fa-wrench"></i>修改头像</a>
 				<a href="javascript:;" title="更新缓存" onclick="delcache()"><i class="fa fa-send"></i>更新缓存</a>
+			</div>
+		</div>
+		<div class="modal fade" id="changeModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h4 class="modal-title text-primary">
+							<i class="fa fa-pencil"></i>
+							更换头像
+						</h4>
+					</div>
+					<div class="modal-body">
+						<p class="tip-info text-center">
+							未选择图片
+						</p>
+						<div class="img-container hidden">
+							<img src="" alt="" id="photo">
+						</div>
+						<div class="img-preview-box hidden">
+							<hr>
+							<span>150*150:</span>
+							<div class="img-preview img-preview-lg">
+							</div>
+							<span>100*100:</span>
+							<div class="img-preview img-preview-md">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<label class="btn btn-danger pull-left" for="photoInput">
+							<input type="file" class="sr-only" id="photoInput" accept="image/*">
+							<span>打开图片</span>
+						</label>
+						<button class="btn btn-primary disabled" disabled="true" onclick="sendPhoto();">提交</button>
+						<button class="btn btn-close" aria-hidden="true" data-dismiss="modal">取消</button>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="center-logo">
@@ -578,6 +640,106 @@ var admin_main = "http://tp.23673.com/admin";
 <input type="hidden" id="page_count" />
 <input type="hidden" id="page_size" />
 <script>
+    var initCropperInModal = function(img, input, modal){
+        var $image = img;
+        var $inputImage = input;
+        var $modal = modal;
+        var options = {
+            aspectRatio: 1, // 纵横比
+            viewMode: 1,
+            preview: '.img-preview' // 预览图的class名
+        };
+        // 模态框隐藏后需要保存的数据对象
+        var saveData = {};
+        var URL = window.URL || window.webkitURL;
+        var blobURL;
+        $modal.on('show.bs.modal',function () {
+            // 如果打开模态框时没有选择文件就点击“打开图片”按钮
+            if(!$inputImage.val()){
+                $inputImage.click();
+            }
+        }).on('shown.bs.modal', function () {
+            // 重新创建
+            $image.cropper( $.extend(options, {
+                ready: function () {
+                    // 当剪切界面就绪后，恢复数据
+                    if(saveData.canvasData){
+                        $image.cropper('setCanvasData', saveData.canvasData);
+                        $image.cropper('setCropBoxData', saveData.cropBoxData);
+                    }
+                }
+            }));
+        }).on('hidden.bs.modal', function () {
+            // 保存相关数据
+            saveData.cropBoxData = $image.cropper('getCropBoxData');
+            saveData.canvasData = $image.cropper('getCanvasData');
+            // 销毁并将图片保存在img标签
+            $image.cropper('destroy').attr('src',blobURL);
+        });
+        if (URL) {
+            $inputImage.change(function() {
+                var files = this.files;
+                var file;
+                if (!$image.data('cropper')) {
+                    return;
+                }
+                if (files && files.length) {
+                    file = files[0];
+                    if (/^image\/\w+$/.test(file.type)) {
+
+                        if(blobURL) {
+                            URL.revokeObjectURL(blobURL);
+                        }
+                        blobURL = URL.createObjectURL(file);
+
+                        // 重置cropper，将图像替换
+                        $image.cropper('reset').cropper('replace', blobURL);
+
+                        // 选择文件后，显示和隐藏相关内容
+                        $('.img-container').removeClass('hidden');
+                        $('.img-preview-box').removeClass('hidden');
+                        $('#changeModal .disabled').removeAttr('disabled').removeClass('disabled');
+                        $('#changeModal .tip-info').addClass('hidden');
+
+                    } else {
+                        window.alert('请选择一个图像文件！');
+                    }
+                }
+            });
+        } else {
+            $inputImage.prop('disabled', true).addClass('disabled');
+        }
+    }
+
+    var sendPhoto = function () {
+        // 得到PNG格式的dataURL
+        var photo = $('#photo').cropper('getCroppedCanvas', {
+            width: 300,
+            height: 300
+        }).toDataURL('image/png');
+
+        $.ajax({
+            url: "{:url('admin/Index/updateLogo')}", // 要上传的地址
+            type: 'post',
+            data: {
+                'imgData': photo
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.status == 0) {
+                    // 将上传的头像的地址填入，为保证不载入缓存加个随机数
+                    $('#user-photo').attr('src', data.msg+ '?t=' + Math.random());
+                    $('#changeModal').modal('hide');
+                } else {
+                    console.log(data);
+                }
+            }
+        });
+    }
+
+    $(function(){
+        initCropperInModal($('#photo'),$('#photoInput'),$('#changeModal'));
+    });
 $(function() {
 	try{
 		$("#turn-ul").show();//显示分页
