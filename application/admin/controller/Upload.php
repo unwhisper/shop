@@ -41,16 +41,14 @@ class Upload
 
         //表单图片name
         $name = 'editormd-image-file';
-
         if (isset($_FILES[$name]))
         {
             $imageUploader = new \upload\EditorMdUploader($savePath, $saveURL, $formats['image'], 2,'32');  // Ymdhis表示按日期生成文件名，利用date()函数
 
             $imageUploader->config(array(
-                'maxSize' => 2048,        // 允许上传的最大文件大小，以KB为单位，默认值为1024
+                'maxSize' => 1024,        // 允许上传的最大文件大小，以KB为单位，默认值为1024
                 'cover'   => false         // 是否覆盖同名文件，默认为true
             ));
-
             if ($imageUploader->upload($name))
             {
                 $imageUploader->message('上传成功！', 1);

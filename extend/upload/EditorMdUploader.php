@@ -1,6 +1,8 @@
 <?php
 namespace upload;
 
+use app\common\controller\Image;
+
 class EditorMdUploader
     {
         public $files;                          // $_FILES数组
@@ -127,13 +129,6 @@ class EditorMdUploader
                 return false;
             }
 
-            if ($files["size"] / 1024 > $this->maxSize)
-            {
-                $message = "您上传的 " . $files["name"] . "，文件大小超出了系统限定值" . $this->maxSize . " KB，不能上传。";
-                $this->message($message);
-                
-                return false;
-            }
 
             if (!$this->cover) //当不能覆盖时
             {
@@ -145,53 +140,65 @@ class EditorMdUploader
                 }
             }
 
-            if (!@move_uploaded_file($files["tmp_name"], iconv("utf-8", "gbk", $this->savePath . $this->saveName)))
-            {                
-                switch($files["errors"])
+            if ($files["size"] / 1024 > $this->maxSize)
+            {
+                $src = $files["tmp_name"];
+                $image = new Image($src);
+                $image->percent = 1;
+                $image->openImage();
+                $image->thumpImage();
+                $image->saveImage($this->savePath . $this->saveName);
+                $filename = $this->savePath . $this->saveName.'.'.$image->imageinfo['type'];
+                rename($filename,$this->savePath . $this->saveName);
+            }else{
+                if (!@move_uploaded_file($files["tmp_name"], iconv("utf-8", "gbk", $this->savePath . $this->saveName)))
                 {
-                    case '0':
-                        $message = "文件上传成功";
-                        break;
-                    
-                    case '1':
-                        $message = "上传的文件超过了 php.ini 中 upload_max_filesize 选项限制的值";
-                        break;
-                    
-                    case '2':
-                        $message = "上传文件的大小超过了 HTML 表单中 MAX_FILE_SIZE 选项指定的值";
-                        break;
-                    
-                    case '3':
-                        $message = "文件只有部分被上传";
-                        break;
-                    
-                    case '4':
-                        $message = "没有文件被上传";
-                        break;
-                    
-                    case '6':
-                        $message = "找不到临时目录";
-                        break;
-                    
-                    case '7':
-                        $message = "写文件到硬盘时出错";
-                        break;
-                    
-                    case '8':
-                        $message = "某个扩展停止了文件的上传";
-                        break;
-                    
-                    case '999':
-                    default:
-                        $message = "未知错误，请检查文件是否损坏、是否超大等原因。";
-                        break;
-                }
+                    switch($files["errors"])
+                    {
+                        case '0':
+                            $message = "文件上传成功";
+                            break;
 
-                $this->message($message);
-                
-                return false;
+                        case '1':
+                            $message = "上传的文件超过了 php.ini 中 upload_max_filesize 选项限制的值";
+                            break;
+
+                        case '2':
+                            $message = "上传文件的大小超过了 HTML 表单中 MAX_FILE_SIZE 选项指定的值";
+                            break;
+
+                        case '3':
+                            $message = "文件只有部分被上传";
+                            break;
+
+                        case '4':
+                            $message = "没有文件被上传";
+                            break;
+
+                        case '6':
+                            $message = "找不到临时目录";
+                            break;
+
+                        case '7':
+                            $message = "写文件到硬盘时出错";
+                            break;
+
+                        case '8':
+                            $message = "某个扩展停止了文件的上传";
+                            break;
+
+                        case '999':
+                        default:
+                            $message = "未知错误，请检查文件是否损坏、是否超大等原因。";
+                            break;
+                    }
+
+                    $this->message($message);
+
+                    return false;
+                }
             }
-            
+
             @unlink($files["tmp_name"]); //删除临时文件
             
             return true;

@@ -21,11 +21,20 @@ class Index extends Controller
         $this->server = new IndexServer();
     }
 
+    /**
+     * 后台首页
+     * @return mixed
+     */
     public function index()
     {
         return $this->fetch();
     }
 
+    /**
+     * 上传头像
+     * @param Request $request
+     * @return \think\response\Json
+     */
     public function updateLogo(Request $request)
     {
         $admin_id = $this->admin_id;
@@ -73,6 +82,11 @@ class Index extends Controller
 
     }
 
+    /**
+     * 后台用户登录
+     * @param Request $request
+     * @return mixed|\think\response\Json
+     */
     public function login(Request $request)
     {
         if ($request::isPost()){
@@ -90,12 +104,19 @@ class Index extends Controller
         return $this->fetch();
     }
 
+    /**
+     * 用户登出
+     */
     public function logout()
     {
         $this->server->logout();
         $this->success('退出成功',"admin/Index/login");
     }
 
+    /**
+     * 验证码
+     * @return \think\Response
+     */
     public function verify()
     {
         $captcha = new Captcha();

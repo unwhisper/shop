@@ -1,12 +1,10 @@
 <?php
-/**
-图片压缩操作类
-v1.0
- */
+namespace app\common\controller;
+
    class Image{
 
        private $src;
-       private $imageinfo;
+       public $imageinfo;
        private $image;
        public  $percent = 1;
        public function __construct($src){

@@ -92,6 +92,12 @@ class IndexServer
         }
     }
 
+    /**
+     * 上传头像
+     * @param $admin_id 用户id
+     * @param $base64_image_content  图像资源
+     * @return array
+     */
     public function updateLogo($admin_id,$base64_image_content)
     {
         if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)) {
