@@ -12,6 +12,19 @@
 // [ 应用入口文件 ]
 namespace think;
 
+if (version_compare(PHP_VERSION,'5.6.0','<')){
+    header("Content-type: text/html; charset=utf-8");
+    die('PHP 版本必须大于5.6.0!');
+}
+
+error_reporting(E_ERROR | E_WARNING | E_PARSE);//报告运行时错误
+
+$http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
+define('SITE_URL',$http.'://'.$_SERVER['HTTP_HOST']); // 网站域名
+// 定义应用目录
+define('APP_PATH', __DIR__ . '/../application/');
+// 定义时间
+define('NOW_TIME',$_SERVER['REQUEST_TIME']);
 // 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';
 

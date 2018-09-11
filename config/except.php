@@ -3,7 +3,7 @@
 return [
     //admin模块
     'admin' =>[
-        'index/login',
-        'index/verify'
+        'admin/login',
+        'admin/verify'
     ],
 ];

@@ -6,13 +6,13 @@
  * Time: 下午 3:08
  */
 Route::group('admin',function (){
-    Route::rule('','admin/Index/index');
-    Route::rule('login','admin/Index/login');
-    Route::rule('verify','admin/Index/verify');
-    Route::rule('test','admin/Index/test');
-    Route::rule('change','admin/Index/change');
-    Route::rule('showarticle/id/:id','admin/Index/showArticle');
-    Route::rule('showlist','admin/Index/showList');
+    Route::rule('welcome','admin/Admin/index');
+    Route::rule('','admin/Admin/login');
+    Route::rule('verify','admin/Admin/verify');
+    Route::rule('test','admin/Admin/test');
+    Route::rule('change','admin/Admin/change');
+    Route::rule('showarticle/id/:id','admin/Admin/showArticle');
+    Route::rule('showlist','admin/Admin/showList');
 });
 
 return [

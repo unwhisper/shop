@@ -14,7 +14,7 @@ class CheckLogin extends Controller
         $except = Config::get('except.admin');
         if (!SC::getLoginSession()){
             if (!in_array($ctl,$except)){
-                $this->error('请登录','admin/Index/login');
+                $this->error('请登录','admin/Admin/login');
             }
         }else{
             //登陆成功
