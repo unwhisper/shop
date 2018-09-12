@@ -15,6 +15,11 @@ Route::group('admin',function (){
     Route::rule('showlist','admin/Admin/showList');
 });
 
+Route::group('home',function (){
+    Route::rule('','admin/Index/index');
+    Route::rule('welcome','admin/Index/welcome');
+});
+
 return [
 
 ];
