@@ -110,7 +110,7 @@ class Admin extends Controller
     public function logout()
     {
         $this->server->logout();
-        $this->success('退出成功',"admin/Index/login");
+        $this->success('退出成功',"admin/Admin/login");
     }
 
     /**

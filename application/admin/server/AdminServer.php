@@ -34,6 +34,7 @@ class AdminServer
         SC::setLoginIdSession($admin->admin_id);
         SC::setUserInfoSession($admin->user_name);
         SC::setUserRoleSession($admin->adminRole->role_name);
+        SC::setRoleList($admin->adminRole->act_list);
         $ip = get_real_ip();
         Admin::where('user_name',$username)->update(['last_login' => time(),'last_ip' => $ip]);
         if ($rember == 'on' && !Cookie::has('rember')){

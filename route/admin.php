@@ -20,6 +20,10 @@ Route::group('home',function (){
     Route::rule('welcome','admin/Index/welcome');
 });
 
+Route::group('system',function (){
+    Route::rule('index/inc_type/:type','admin/System/index');
+});
+
 return [
 
 ];

@@ -27,7 +27,7 @@ class Index extends Controller
     {
         $admin_info = $this->server->getAdminInfo();
         $order_amount = $this->server->getOrderCount();
-        $menu = Config::get('menu.');
+        $menu = $this->server->getMenuArr();
         $this->assign('order_amount',$order_amount);
         $this->assign('admin_info',$admin_info);
         $this->assign('menu',$menu);

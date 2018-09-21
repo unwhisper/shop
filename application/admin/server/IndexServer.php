@@ -16,6 +16,8 @@ use app\common\model\Goods;
 use app\common\model\Article;
 use app\common\model\User;
 use app\common\model\Comment;
+use app\common\model\SystemMenu;
+use think\facade\Config;
 
 class IndexServer
 {
@@ -63,6 +65,10 @@ class IndexServer
         return 0;
     }
 
+    /**
+     * 用户数量
+     * @return float|int|string
+     */
     public function userCount()
     {
         $count = User::count();
@@ -70,6 +76,11 @@ class IndexServer
         return 0;
     }
 
+    /**
+     * 今日登陆量
+     * @param $today
+     * @return float|int|string
+     */
     public function todayLogin($today)
     {
         $count = User::where('last_login','>=',$today)->count();
@@ -77,16 +88,59 @@ class IndexServer
         return 0;
     }
 
+    /**
+     * 今日注册
+     * @param $today
+     * @return float|int|string
+     */
     public function newUser($today)
     {
         $count = User::where('reg_time','>=',$today)->count();
         if ($count) return $count;
         return 0;
     }
+
+    /**
+     * 评论
+     * @return float|int|string
+     */
     public function commentCount()
     {
         $count = Comment::where('is_show','=',0)->count();
         if ($count) return $count;
         return 0;
+    }
+
+    /**
+     * 获取后台菜单
+     * @return mixed
+     */
+    public function getMenuArr(){
+        $menuArr = Config::get('menu.');
+        $act_list = session('admin')['role_list'];
+        if($act_list != 'all' && !empty($act_list)){
+            $right = SystemMenu::where("id", "in", $act_list)->cache(true)->column('right');
+            $role_right = '';
+            foreach ($right as $val){
+                $role_right .= $val.',';
+            }
+            foreach($menuArr as $k=>$val){
+                foreach ($val['child'] as $j=>$v){
+                    foreach ($v['child'] as $s=>$son){
+                        if(strpos($role_right,$son['op'].'@'.$son['act']) === false){
+                            unset($menuArr[$k]['child'][$j]['child'][$s]);//过滤菜单
+                        }
+                    }
+                }
+            }
+            foreach ($menuArr as $mk=>$mr){
+                foreach ($mr['child'] as $nk=>$nrr){
+                    if(empty($nrr['child'])){
+                        unset($menuArr[$mk]['child'][$nk]);
+                    }
+                }
+            }
+        }
+        return $menuArr;
     }
 }

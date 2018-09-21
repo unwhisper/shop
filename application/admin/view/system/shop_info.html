@@ -1,4 +1,4 @@
-<include file="public/layout" />
+{include file="public/layout" /}
 <style>
     .system_img_location{text-align: center; width: 120px;position:absolute;top:15px; margin-left:265px;}
 </style>
@@ -13,9 +13,9 @@
                 <h5>网站全局内容基本选项设置</h5>
             </div>
             <ul class="tab-base nc-row">
-                <foreach name="group_list" item="v" key="k">
-                    <li><a href="{:U('System/index',['inc_type'=> $k])}" <if condition="$k==$inc_type">class="current"</if>><span>{$v}</span></a></li>
-                </foreach>
+                {foreach $group_list as $k=>$v}
+                    <li><a href="{:url('admin/System/index',['inc_type'=> $k])}" {if condition="$k==$inc_type"}class="current"{/if}><span>{$v}</span></a></li>
+                {/foreach}
             </ul>
         </div>
     </div>
@@ -26,11 +26,11 @@
             <span id="explanationZoom" title="收起提示"></span> </div>
         <ul>
             <li>系统平台全局设置,包括基础设置、购物、短信、邮件、水印和分销等相关模块。</li>
-            <li>该页面的所有默认图标logo在"网站根目录/public/static/images/logo"目录下, 如果需要重新设计图标可参考默认图</li>
+            <li>该页面的所有默认图标logo在"网站根目录__STATIC__/images/logo"目录下, 如果需要重新设计图标可参考默认图</li>
             <li>鼠标移到图标LOGO右侧 <a title="图片所在位置" class="pic-thumb-tip" ><i class="fa fa-picture-o"></i></a>会显示该图片大概所在位置</li>
         </ul>
     </div>
-    <form method="post" id="handlepost" action="{:U('System/handle')}" enctype="multipart/form-data" name="form1">
+    <form method="post" id="handlepost" action="{:url('System/handle')}" enctype="multipart/form-data" name="form1">
         <input type="hidden" name="form_submit" value="ok" />
         <div class="ncap-form-default">
             <dl class="row">
@@ -59,18 +59,18 @@
                 <dd class="opt">
                     <div class="input-file-show">
                         <span class="show">
-                            <a id="store_logo_a" target="_blank" class="nyroModal" rel="gal" href="{$config.store_logo|default='/public/static/images/logo/pc_home_logo_default.png'}">
-                                <i id="store_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.store_logo|default=\'/public/static/images/logo/pc_home_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                            <a id="store_logo_a" target="_blank" class="nyroModal" rel="gal" href="{$config.store_logo|default='__STATIC__/images/logo/pc_home_logo_default.png'}">
+                                <i id="store_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.store_logo|default=\'__STATIC__/images/logo/pc_home_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
                             </a>
                         </span>
            	            <span class="type-file-box">
-                            <input type="text" id="store_logo" name="store_logo" value="{$config.store_logo|default='/public/static/images/logo/pc_home_logo_default.png'}" class="type-file-text">
+                            <input type="text" id="store_logo" name="store_logo" value="{$config.store_logo|default='__STATIC__/images/logo/pc_home_logo_default.png'}" class="type-file-text">
                             <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
                             <input class="type-file-file" onClick="GetUploadify(1,'store_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
                         </span>
                     </div>
                     <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/pc_home_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'/public/static/images/logo/pc_home_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
+                        <a title="图片所在位置" href="__STATIC__/images/logo/pc_home_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'__STATIC__/images/logo/pc_home_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
                     </div>
                     <span class="err"></span>
                     <p class="notic">默认网站首页LOGO,通用头部显示，最佳显示尺寸为230*58像素</p>
@@ -83,18 +83,18 @@
                 <dd class="opt">
                     <div class="input-file-show">
                         <span class="show">
-                            <a id="store_user_logo_a" class="nyroModal" rel="gal" href="{$config.store_user_logo|default='/public/static/images/logo/pc_home_user_logo_default.png'}">
-                                <i id="store_user_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.store_user_logo|default=\'/public/static/images/logo/pc_home_user_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                            <a id="store_user_logo_a" class="nyroModal" rel="gal" href="{$config.store_user_logo|default='__STATIC__/images/logo/pc_home_user_logo_default.png'}">
+                                <i id="store_user_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.store_user_logo|default=\'__STATIC__/images/logo/pc_home_user_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
                             </a>
                         </span>
            	            <span class="type-file-box">
-                            <input type="text" id="store_user_logo" name="store_user_logo" value="{$config.store_user_logo|default='/public/static/images/logo/pc_home_user_logo_default.png'}" class="type-file-text">
+                            <input type="text" id="store_user_logo" name="store_user_logo" value="{$config.store_user_logo|default='__STATIC__/images/logo/pc_home_user_logo_default.png'}" class="type-file-text">
                             <input type="button" name="button" value="选择上传..." class="type-file-button">
                             <input class="type-file-file" onClick="GetUploadify(1,'store_user_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
                         </span>
                     </div>
                     <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/pc_home_user_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'/public/static/images/logo/pc_home_user_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();">
+                        <a title="图片所在位置" href="__STATIC__/images/logo/pc_home_user_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'__STATIC__/images/logo/pc_home_user_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();">
                             <i class="fa fa-picture-o"></i>
                         </a>
                     </div>
@@ -119,7 +119,7 @@
                             <input class="type-file-file" onClick="GetUploadify(1,'store_ico','logo','store_ico_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
                         </span>
                     </div>
-                    <div class="system_img_location"><a title="图片所在位置" href="/public/static/images/logo/storeico_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'/public/static/images/logo/storeico_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
+                    <div class="system_img_location"><a title="图片所在位置" href="__STATIC__/images/logo/storeico_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'__STATIC__/images/logo/storeico_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
                     </div>
                     <span class="err"></span>
                     <p class="notic">网站标题图标LOGO,最佳显示尺寸为48*48像素</p>
@@ -159,18 +159,18 @@
                 <dd class="opt">
                     <div class="input-file-show">
                         <span class="show">
-                            <a id="admin_login_logo_a" class="nyroModal" rel="gal" href="{$config.admin_login_logo|default='/public/static/images/logo/admin_login_logo_default.png'}">
-                                <i id="admin_login_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.admin_login_logo|default=\'/public/static/images/logo/admin_login_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                            <a id="admin_login_logo_a" class="nyroModal" rel="gal" href="{$config.admin_login_logo|default='__STATIC__/images/logo/admin_login_logo_default.png'}">
+                                <i id="admin_login_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.admin_login_logo|default=\'__STATIC__/images/logo/admin_login_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
                             </a>
                         </span>
            	            <span class="type-file-box">
-                            <input type="text" id="admin_login_logo" name="admin_login_logo" value="{$config.admin_login_logo|default='/public/static/images/logo/admin_login_logo_default.png'}" class="type-file-text">
+                            <input type="text" id="admin_login_logo" name="admin_login_logo" value="{$config.admin_login_logo|default='__STATIC__/images/logo/admin_login_logo_default.png'}" class="type-file-text">
                             <input type="button" name="button" value="选择上传..." class="type-file-button">
                             <input class="type-file-file" onClick="GetUploadify(1,'admin_login_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
                         </span>
                     </div>
                     <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/admin_login_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'/public/static/images/logo/admin_login_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
+                        <a title="图片所在位置" href="__STATIC__/images/logo/admin_login_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'__STATIC__/images/logo/admin_login_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
                     </div>
                     <span class="err"></span>
                     <p class="notic">平台管理员登录页LOGO,最佳显示尺寸为220*82像素</p>
@@ -184,18 +184,18 @@
                 <dd class="opt">
                     <div class="input-file-show">
                         <span class="show">
-                            <a id="admin_home_logo_a" class="nyroModal" rel="gal" href="{$config.admin_home_logo|default='/public/static/images/logo/admin_home_logo_default.png'}">
-                                <i id="admin_home_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.admin_home_logo|default=\'/public/static/images/logo/admin_home_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                            <a id="admin_home_logo_a" class="nyroModal" rel="gal" href="{$config.admin_home_logo|default='__STATIC__/images/logo/admin_home_logo_default.png'}">
+                                <i id="admin_home_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.admin_home_logo|default=\'__STATIC__/images/logo/admin_home_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
                             </a>
                         </span>
            	            <span class="type-file-box">
-                            <input type="text" id="admin_home_logo" name="admin_home_logo" value="{$config.admin_home_logo|default='/public/static/images/logo/admin_home_logo_default.png'}" class="type-file-text">
+                            <input type="text" id="admin_home_logo" name="admin_home_logo" value="{$config.admin_home_logo|default='__STATIC__/images/logo/admin_home_logo_default.png'}" class="type-file-text">
                             <input type="button" name="button" value="选择上传..." class="type-file-button">
                             <input class="type-file-file" onClick="GetUploadify(1,'admin_home_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
                         </span>
                     </div>
                     <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/admin_home_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'/public/static/images/logo/admin_home_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
+                        <a title="图片所在位置" href="__STATIC__/images/logo/admin_home_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'__STATIC__/images/logo/admin_home_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
                     </div>
                     <span class="err"></span>
                     <p class="notic">平台后台顶部LOGO,最佳显示尺寸为148*28像素</p>
@@ -209,18 +209,18 @@
                 <dd class="opt">
                     <div class="input-file-show">
                         <span class="show">
-                            <a id="wap_home_logo_a" class="nyroModal" rel="gal" href="{$config.wap_home_logo|default='/public/static/images/logo/wap_home_logo_default.png'}">
-                                <i id="wap_home_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.wap_home_logo|default=\'/public/static/images/logo/wap_home_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                            <a id="wap_home_logo_a" class="nyroModal" rel="gal" href="{$config.wap_home_logo|default='__STATIC__/images/logo/wap_home_logo_default.png'}">
+                                <i id="wap_home_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.wap_home_logo|default=\'__STATIC__/images/logo/wap_home_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
                             </a>
                         </span>
            	            <span class="type-file-box">
-                            <input type="text" id="wap_home_logo" name="wap_home_logo" value="{$config.wap_home_logo|default='/public/static/images/logo/wap_home_logo_default.png'}" class="type-file-text">
+                            <input type="text" id="wap_home_logo" name="wap_home_logo" value="{$config.wap_home_logo|default='__STATIC__/images/logo/wap_home_logo_default.png'}" class="type-file-text">
                             <input type="button" name="button" value="选择上传..." class="type-file-button">
                             <input class="type-file-file" onClick="GetUploadify(1,'wap_home_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
                         </span>
                     </div>
                     <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/wap_home_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'/public/static/images/logo/wap_home_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
+                        <a title="图片所在位置" href="__STATIC__/images/logo/wap_home_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'__STATIC__/images/logo/wap_home_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
                     </div>
                     <span class="err"></span>
                     <p class="notic">手机端首页搜索框LOGO,最佳显示尺寸为48*48像素</p>
@@ -233,18 +233,18 @@
                 <dd class="opt">
                     <div class="input-file-show">
                         <span class="show">
-                            <a id="wap_login_logo_a" class="nyroModal" rel="gal" href="{$config.wap_login_logo|default='/public/static/images/logo/wap_logo_default.png'}">
-                                <i id="wap_login_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.wap_login_logo|default=\'/public/static/images/logo/wap_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                            <a id="wap_login_logo_a" class="nyroModal" rel="gal" href="{$config.wap_login_logo|default='__STATIC__/images/logo/wap_logo_default.png'}">
+                                <i id="wap_login_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.wap_login_logo|default=\'__STATIC__/images/logo/wap_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
                             </a>
                         </span>
            	            <span class="type-file-box">
-                            <input type="text" id="wap_login_logo" name="wap_login_logo" value="{$config.wap_login_logo|default='/public/static/images/logo/wap_logo_default.png'}" class="type-file-text">
+                            <input type="text" id="wap_login_logo" name="wap_login_logo" value="{$config.wap_login_logo|default='__STATIC__/images/logo/wap_logo_default.png'}" class="type-file-text">
                             <input type="button" name="button" value="选择上传..." class="type-file-button">
                             <input class="type-file-file" onClick="GetUploadify(1,'wap_login_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
                         </span>
                     </div>
                     <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/wap_login_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'/public/static/images/logo/wap_login_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
+                        <a title="图片所在位置" href="__STATIC__/images/logo/wap_login_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=\'__STATIC__/images/logo/wap_login_logo_pos.png\' style=\'height:500px;width: 500px\'>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
                     </div>
                     <span class="err"></span>
                     <p class="notic">手机端登录页LOGO,最佳显示尺寸为312*92像素</p>
@@ -288,21 +288,21 @@
                 <dd class="opt">
                     <select onchange="get_city(this)" id="province" name="province">
                         <option  value="0">选择省份</option>
-                        <volist name="province" id="vo">
-                            <option value="{$vo.id}" <if condition="$config[province] eq $vo[id]">selected</if>>{$vo.name}</option>
-                        </volist>
+                        {volist name="province" id="vo"}
+                            <option value="{$vo.id}" {if condition="$config.province eq $vo.id"}selected{/if}>{$vo.name}</option>
+                        {/volist}
                     </select>
                     <select onchange="get_area(this);" id="city" name="city">
                         <option value="0">选择城市</option>
-                        <volist name="city" id="vo">
-                            <option value="{$vo.id}" <if condition="$config[city] eq $vo[id]">selected</if>>{$vo.name}</option>
-                        </volist>
+                        {volist name="city" id="vo"}
+                            <option value="{$vo.id}" {if condition="$config.city eq $vo.id"}selected{/if}>{$vo.name}</option>
+                        {/volist}
                     </select>
                     <select id="district" name="district">
                         <option value="0">选择区域</option>
-                        <volist name="area" id="vo">
-                            <option value="{$vo.id}" <if condition="$config[district] eq $vo[id]">selected</if>>{$vo.name}</option>
-                        </volist>
+                        {volist name="area" id="vo"}
+                            <option value="{$vo.id}" <if condition="$config.district eq $vo.id">selected</if>>{$vo.name}</option>
+                        {/volist}
                     </select>
                     
                 </dd>

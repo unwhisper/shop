@@ -19,6 +19,10 @@ class SC{
      */
     CONST USER_ROLE = 'user_role';
     /**
+     * 权限列表
+     */
+    CONST ROLE_LIST = 'role_list';
+    /**
      * USER用户信息
      *
      * @var string
@@ -85,6 +89,18 @@ class SC{
         return Session::get(self::PRI_KEY.'.'.self::USER_ROLE);
     }
 
+    /**
+     * @param $role_list 权限列表
+     */
+    public function setRoleList($role_list)
+    {
+        return Session::set(self::PRI_KEY.'.'.self::ROLE_LIST,$role_list);
+    }
+
+    public function getRoleList()
+    {
+        return Session::get(self::PRI_KEY.'.'.self::ROLE_LIST);
+    }
     /**
      * 获取登陆session
      * @return mixed

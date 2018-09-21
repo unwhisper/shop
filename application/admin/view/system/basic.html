@@ -1,4 +1,4 @@
-<include file="public/layout"/>
+{include file="public/layout"/}
 <div id="append_parent"></div>
 <div id="ajaxwaitid"></div>
 
@@ -10,9 +10,9 @@
                 <h5>网站全局内容基本选项设置</h5>
             </div>
             <ul class="tab-base nc-row">
-                <foreach name="group_list" item="v" key="k">
-                    <li><a href="{:U('System/index',['inc_type'=> $k])}" <if condition="$k==$inc_type">class="current"</if>><span>{$v}</span></a></li>
-                </foreach>
+                {foreach $group_list as  $k=>$v}
+                    <li><a href="{:url('System/index',['inc_type'=> $k])}" {if condition="$k==$inc_type"}class="current"{/if}><span>{$v}</span></a></li>
+                {/foreach}
             </ul>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <li>系统平台全局设置,包括基础设置、购物、短信、邮件、水印和分销等相关模块。</li>
         </ul>
     </div>
-    <form method="post" enctype="multipart/form-data" name="form1" action="{:U('System/handle')}">
+    <form method="post" enctype="multipart/form-data" name="form1" action="{:url('System/handle')}">
         <input type="hidden" name="inc_type" value="{$inc_type}">
         <div class="ncap-form-default">
             <dl class="row">
@@ -45,10 +45,10 @@
                 </dt>
                 <dd class="opt">
                     <div class="onoff">
-                        <label for="switch1" class="cb-enable  <if condition="$config['invite'] eq 1">selected</if>">开启</label>
-                        <label for="switch0" class="cb-disable <if condition="$config['invite'] eq 0">selected</if>">关闭</label>
-                        <input type="radio" onclick="$('#switch_on_off').show();"  id="switch1"  name="invite" value="1" <if condition="$config['invite'] eq 1">checked="checked"</if>>
-                        <input type="radio" onclick="$('#switch_on_off').hide();" id="switch0" name="invite" value="0" <if condition="$config['invite'] eq 0">checked="checked"</if> >
+                        <label for="switch1" class="cb-enable  {if condition="$config.invite eq 1"}selected{/if}">开启</label>
+                        <label for="switch0" class="cb-disable {if condition="$config.invite eq 0"}selected{/if}">关闭</label>
+                        <input type="radio" onclick="$('#switch_on_off').show();"  id="switch1"  name="invite" value="1" {if condition="$config['invite'] eq 1">checked="checked"</if}>
+                        <input type="radio" onclick="$('#switch_on_off').hide();" id="switch0" name="invite" value="0" {if condition="$config['invite'] eq 0">checked="checked"</if} >
                     </div>
                 </dd>
             </dl>
@@ -70,10 +70,10 @@
                 </dt>
                 <dd class="opt">
                     <div class="onoff">
-                        <label for="rechargevip_on_off1" class="cb-enable  <if condition="$config['rechargevip_on_off'] eq 1">selected</if>">开启</label>
-                        <label for="rechargevip_on_off0" class="cb-disable <if condition="$config['rechargevip_on_off'] eq 0">selected</if>">关闭</label>
-                        <input type="radio" onclick="$('#switch_on_off').show();"  id="rechargevip_on_off1"  name="rechargevip_on_off" value="1" <if condition="$config['rechargevip_on_off'] eq 1">checked="checked"</if>>
-                        <input type="radio" onclick="$('#switch_on_off').hide();" id="rechargevip_on_off0" name="rechargevip_on_off" value="0" <if condition="$config['rechargevip_on_off'] eq 0">checked="checked"</if> >
+                        <label for="rechargevip_on_off1" class="cb-enable  {if condition="$config.rechargevip_on_off eq 1"}selected{/if}">开启</label>
+                        <label for="rechargevip_on_off0" class="cb-disable {if condition="$config.rechargevip_on_off eq 0"}selected{/if}">关闭</label>
+                        <input type="radio" onclick="$('#switch_on_off').show();"  id="rechargevip_on_off1"  name="rechargevip_on_off" value="1" {if condition="$config['rechargevip_on_off'] eq 1">checked="checked"</if}>
+                        <input type="radio" onclick="$('#switch_on_off').hide();" id="rechargevip_on_off0" name="rechargevip_on_off" value="0" {if condition="$config['rechargevip_on_off'] eq 0">checked="checked"</if} >
                     </div>
                 </dd>
             </dl>
@@ -96,10 +96,10 @@
                 </dt>
                 <dd class="opt">
                     <div class="onoff">
-                        <label for="rechargevip_rebate_on_off1" class="cb-enable  <if condition="$config['rechargevip_rebate_on_off'] eq 1">selected</if>">开启</label>
-                        <label for="rechargevip_rebate_on_off0" class="cb-disable <if condition="$config['rechargevip_rebate_on_off'] eq 0">selected</if>">关闭</label>
-                        <input type="radio" onclick="$('#switch_on_off').show();"  id="rechargevip_rebate_on_off1"  name="rechargevip_rebate_on_off" value="1" <if condition="$config['rechargevip_rebate_on_off'] eq 1">checked="checked"</if>>
-                        <input type="radio" onclick="$('#switch_on_off').hide();" id="rechargevip_rebate_on_off0" name="rechargevip_rebate_on_off" value="0" <if condition="$config['rechargevip_rebate_on_off'] eq 0">checked="checked"</if> >
+                        <label for="rechargevip_rebate_on_off1" class="cb-enable  {if condition="$config.rechargevip_rebate_on_off eq 1"}selected{/if}">开启</label>
+                        <label for="rechargevip_rebate_on_off0" class="cb-disable {if condition="$config.rechargevip_rebate_on_off eq 0"}selected{/if}">关闭</label>
+                        <input type="radio" onclick="$('#switch_on_off').show();"  id="rechargevip_rebate_on_off1"  name="rechargevip_rebate_on_off" value="1" {if condition="$config['rechargevip_rebate_on_off'] eq 1">checked="checked"</if}>
+                        <input type="radio" onclick="$('#switch_on_off').hide();" id="rechargevip_rebate_on_off0" name="rechargevip_rebate_on_off" value="0" {if condition="$config['rechargevip_rebate_on_off'] eq 0">checked="checked"</if} >
                     </div>
                 </dd>
             </dl>
@@ -125,13 +125,13 @@
                 </dt>
                 <dd class="opt">
                     <select id="file_size" name="file_size">
-                        <option value="1" <if condition="$config[file_size] eq 1">selected="selected"</if>>1M</option>
-                        <option value="2" <if condition="$config[file_size] eq 2">selected="selected"</if>>2M</option>
-                        <option value="3" <if condition="$config[file_size] eq 3">selected="selected"</if>>3M</option>
-                        <option value="5" <if condition="$config[file_size] eq 4">selected="selected"</if>>5M</option>
-                        <option value="10" <if condition="$config[file_size] eq 10">selected="selected"</if>>10M</option>
-                        <option value="50" <if condition="$config[file_size] eq 50">selected="selected"</if>>50M</option>
-                        <option value="100" <if condition="$config[file_size] eq 100">selected="selected"</if>>100M</option>
+                        <option value="1" {if condition="$config.file_size eq 1"}selected="selected"{/if}>1M</option>
+                        <option value="2" {if condition="$config.file_size eq 2"}selected="selected"{/if}>2M</option>
+                        <option value="3" {if condition="$config.file_size eq 3"}selected="selected"{/if}>3M</option>
+                        <option value="5" {if condition="$config.file_size eq 4"}selected="selected"{/if}>5M</option>
+                        <option value="10" {if condition="$config.file_size eq 10"}selected="selected"{/if}>10M</option>
+                        <option value="50" {if condition="$config.file_size eq 50"}selected="selected"{/if}>50M</option>
+                        <option value="100" {if condition="$config.file_size eq 100"}selected="selected"{/if}>100M</option>
                     </select>
 
                     <p class="notic">附件上传大小限制</p>
@@ -184,8 +184,8 @@
                 <dt class="tit">第三方登录是否必须绑定账号</dt>
                 <dd class="opt">
                     <div class="onoff">
-                        <label for="is_bind_account1" class="cb-enable <if condition='$config[is_bind_account] eq 1'>selected</if>">是</label>
-                        <label for="is_bind_account0" class="cb-disable <if condition='$config[is_bind_account] eq 0'>selected</if>">否</label>
+                        <label for="is_bind_account1" class="cb-enable {if condition='$config.is_bind_account eq 1'}selected{/if}">是</label>
+                        <label for="is_bind_account0" class="cb-disable {if condition='$config.is_bind_account eq 0'}selected{/if}">否</label>
                         <input id="is_bind_account1" name="is_bind_account" checked="checked" value="1" type="radio">
                         <input id="is_bind_account0" name="is_bind_account" value="0" type="radio">
                     </div>
