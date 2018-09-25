@@ -21,6 +21,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);//报告运行时错误
 
 $http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
 define('SITE_URL',$http.'://'.$_SERVER['HTTP_HOST']); // 网站域名
+defined('UPLOAD_PATH') or define('UPLOAD_PATH','static/upload/'); // 编辑器图片上传路径
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/../application/');
 // 定义时间

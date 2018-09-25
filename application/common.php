@@ -25,6 +25,9 @@ function ajax_return($code,$msg)
         'msg' => $msg
     ];
 }
+function ajaxReturn($data,$type = 'json'){
+    exit(json_encode($data));
+}
 
 /**获取客户端真实ip地址
  * @return array|false|string

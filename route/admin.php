@@ -24,6 +24,10 @@ Route::group('system',function (){
     Route::rule('index/inc_type/:type','admin/System/index');
 });
 
+Route::group('uploadify',function (){
+    Route::rule('upload/num/:num/input/:input/path/:path/func/:func/fileType/:fileType','admin/Uploadify/upload');
+});
+
 return [
 
 ];

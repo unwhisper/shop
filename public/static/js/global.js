@@ -44,7 +44,7 @@ function get_city(t,city,district,twon){
     }
     $('#'+district_id).empty().css('display','none');
     $('#'+twon_id).empty().css('display','none');
-    var url = '/index.php?m=Home&c=Api&a=getRegion&level=2&parent_id='+ parent_id;
+    var url = '/index/Api/getRegion/level/2/parent_id/'+ parent_id;
     $.ajax({
         type : "GET",
         url  : url,
@@ -79,7 +79,7 @@ function get_area(t,district,twon){
     }
     $('#'+district_id).empty().css('display','inline');
     $('#'+twon_id).empty().css('display','none');
-    var url = '/index.php?m=Home&c=Api&a=getRegion&level=3&parent_id='+ parent_id;
+    var url = '/index/Api/getRegion/level/3/parent_id/'+ parent_id;
     $.ajax({
         type : "GET",
         url  : url,
@@ -183,8 +183,8 @@ function checkTelphone(tel){
  * @callback string  回调函数(单张图片返回保存路径字符串，多张则为路径数组 )
  */
 function GetUploadify(num,elementid,path,callback,fileType)
-{	   	
-	var upurl ='/index.php?m=Admin&c=Uploadify&a=upload&num='+num+'&input='+elementid+'&path='+path+'&func='+callback+'&fileType='+fileType;
+{
+    var upurl ="/admin/Uploadify/upload/num/"+num+"/input/"+elementid+"/path/"+path+"/func/"+callback+"/fileType/"+fileType;
     var title = '上传图片';
     if(fileType == 'Flash'){
         title = '上传视频';

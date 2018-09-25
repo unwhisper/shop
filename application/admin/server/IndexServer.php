@@ -18,6 +18,7 @@ use app\common\model\User;
 use app\common\model\Comment;
 use app\common\model\SystemMenu;
 use think\facade\Config;
+use app\common\model\Config as tpConfig;
 
 class IndexServer
 {
@@ -142,5 +143,16 @@ class IndexServer
             }
         }
         return $menuArr;
+    }
+
+    public function getConfig()
+    {
+        $res = tpConfig::where('inc_type','shop_info')->select();
+        $config = array();
+        $prifix = 'shop_info_';
+        foreach ($res as $k=>$val){
+            $config[$prifix.$val['name']] = $val['value'];
+        }
+        return $config;
     }
 }

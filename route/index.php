@@ -10,6 +10,9 @@ Route::rule('','index/Index/index');
 Route::group('index',function (){
 
 });
+Route::group('api',function (){
+    Route::rule('getregion/level/2/parent_id/:id','index/Api/getRegion');
+});
 
 return [
 

@@ -301,7 +301,7 @@
                     <select id="district" name="district">
                         <option value="0">选择区域</option>
                         {volist name="area" id="vo"}
-                            <option value="{$vo.id}" <if condition="$config.district eq $vo.id">selected</if>>{$vo.name}</option>
+                            <option value="{$vo.id}" {if condition="$config.district eq $vo.id"}selected{/if}>{$vo.name}</option>
                         {/volist}
                     </select>
                     
