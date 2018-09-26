@@ -1,4 +1,4 @@
-<include file="public/layout"/>
+{include file="public/layout"/}
 <body style="background-color: #FFF; overflow: auto;">
 <div id="append_parent"></div>
 <div id="ajaxwaitid"></div>
@@ -10,9 +10,9 @@
                 <h5>网站全局内容基本选项设置</h5>
             </div>
             <ul class="tab-base nc-row">
-                <foreach name="group_list" item="v" key="k">
-                    <li><a href="{:U('System/index',['inc_type'=> $k])}" <if condition="$k==$inc_type">class="current"</if>><span>{$v}</span></a></li>
-                </foreach>
+                {foreach $group_list as $k=>$v}
+                    <li><a href="{:url('System/index',['inc_type'=> $k])}" {if condition="$k==$inc_type"}class="current"{/if}><span>{$v}</span></a></li>
+                {/foreach}
             </ul>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <li>系统平台全局设置,包括基础设置、购物、短信、邮件、水印和分销等相关模块。</li>
         </ul>
     </div>
-    <form method="post" id="handlepost" action="{:U('System/handle')}">
+    <form method="post" id="handlepost" action="{:url('System/handle')}">
         <input type="hidden" name="inc_type" value="{$inc_type}">
         <div class="ncap-form-default">
             <dl class="row">
@@ -68,10 +68,10 @@
                 <dt class="tit">注册启用邮箱</dt>
                 <dd class="opt">
                     <div class="onoff">
-                        <label for="regis_smtp_enable1" class="cb-enable <if condition='$config[regis_smtp_enable] eq 1'>selected</if>">开启</label>
-                        <label for="regis_smtp_enable0" class="cb-disable <if condition='$config[regis_smtp_enable] eq 0'>selected</if>">关闭</label>
-                        <input id="regis_smtp_enable1" name="regis_smtp_enable" <if condition="$config['regis_smtp_enable'] eq 1">checked="checked"</if> value="1" type="radio">
-                        <input id="regis_smtp_enable0" name="regis_smtp_enable" <if condition="$config['regis_smtp_enable'] eq 0">checked="checked"</if> value="0" type="radio">
+                        <label for="regis_smtp_enable1" class="cb-enable {if condition='$config.regis_smtp_enable eq 1'}selected{/if}">开启</label>
+                        <label for="regis_smtp_enable0" class="cb-disable {if condition='$config.regis_smtp_enable eq 0'}selected{/if}">关闭</label>
+                        <input id="regis_smtp_enable1" name="regis_smtp_enable" {if condition="$config.regis_smtp_enable eq 1"}checked="checked"{/if} value="1" type="radio">
+                        <input id="regis_smtp_enable0" name="regis_smtp_enable" {if condition="$config.regis_smtp_enable eq 0"}checked="checked"{/if} value="0" type="radio">
                     </div>
                     <p class="notic">用户注册时使用邮箱验证</p>
                 </dd>
@@ -125,7 +125,7 @@
                 type: "post",
                 data: $('#handlepost').serialize(),
                 dataType: 'json',
-                url: "{:U('System/send_email')}",
+                url: "{:url('System/send_email')}",
                 success: function (res) {
                     if (res.status == 1) {
                         layer.msg('发送成功', {icon: 1});

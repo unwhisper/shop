@@ -1,4 +1,4 @@
-<include file="public/layout"/>
+{include file="public/layout"/}
 <div id="append_parent"></div>
 <div id="ajaxwaitid"></div>
 
@@ -10,9 +10,9 @@
                 <h5>网站全局内容基本选项设置</h5>
             </div>
             <ul class="tab-base nc-row">
-                <foreach name="group_list" item="v" key="k">
-                    <li><a href="{:U('System/index',['inc_type'=> $k])}" <if condition="$k==$inc_type">class="current"</if>><span>{$v}</span></a></li>
-                </foreach>
+                {foreach $group_list as $k=>$v}
+                    <li><a href="{:url('System/index',['inc_type'=> $k])}" {if condition="$k==$inc_type"}class="current"{/if}><span>{$v}</span></a></li>
+                {/foreach}
             </ul>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <li>系统平台全局设置,包括基础设置、购物、短信、邮件、水印和分销等相关模块。</li>
         </ul>
     </div>
-    <form method="post" enctype="multipart/form-data" name="form1" action="{:U('System/handle')}">
+    <form method="post" enctype="multipart/form-data" name="form1" action="{:url('System/handle')}">
         <input type="hidden" name="inc_type" value="{$inc_type}">
         <div class="ncap-form-default">
             <dl class="row">
@@ -34,10 +34,10 @@
                 </dt>
                 <dd class="opt">
                     <div class="onoff">
-                        <label for="switch1" class="cb-enable  <if condition="$config['cash_open'] eq 1">selected</if>">开启</label>
-                        <label for="switch0" class="cb-disable <if condition="$config['cash_open'] eq 0">selected</if>">关闭</label>
-                        <input type="radio" onclick="$('#switch_on_off').show();"  id="switch1"  name="cash_open" value="1" <if condition="$config['cash_open'] eq 1">checked="checked"</if>>
-                        <input type="radio" onclick="$('#switch_on_off').hide();" id="switch0" name="cash_open" value="0" <if condition="$config['cash_open'] eq 0">checked="checked"</if> >
+                        <label for="switch1" class="cb-enable  {if condition="$config.cash_open eq 1"}selected{/if}">开启</label>
+                        <label for="switch0" class="cb-disable {if condition="$config.cash_open eq 0"}selected{/if}">关闭</label>
+                        <input type="radio" onclick="$('#switch_on_off').show();"  id="switch1"  name="cash_open" value="1" {if condition="$config.cash_open eq 1"}checked="checked"{/if}>
+                        <input type="radio" onclick="$('#switch_on_off').hide();" id="switch0" name="cash_open" value="0" {if condition="$config.cash_open eq 0"}checked="checked"{/if} >
                     </div>
                     <p class="notic">是否开启提现配置</p>
                 </dd>

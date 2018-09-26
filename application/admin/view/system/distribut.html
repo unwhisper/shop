@@ -1,4 +1,4 @@
-<include file="public/layout" />
+{include file="public/layout" /}
 <body style="background-color: #FFF; overflow: auto;">
 <div id="append_parent"></div>
 <div id="ajaxwaitid"></div>
@@ -10,9 +10,9 @@
                 <h5>分销基本配置</h5>
             </div>
             <ul class="tab-base nc-row">
-                <foreach name="group_list" item="v" key="k">
-                    <li><a href="{:U('System/index',['inc_type'=> $k])}" <if condition="$k==$inc_type">class="current"</if>><span>{$v}</span></a></li>
-                </foreach>
+                {foreach $group_list as $k=>$v}
+                <li><a href="{:url('admin/System/index',['inc_type'=> $k])}" {if condition="$k==$inc_type"}class="current"{/if}><span>{$v}</span></a></li>
+                {/foreach}
             </ul>
         </div>
     </div>
@@ -27,28 +27,28 @@
             <li>所有分销商获佣比例之和不超过100%,比例为0则也视为不参与分佣</li>
         </ul>
     </div>
-    <form method="post" enctype="multipart/form-data" id="handlepost" action="{:U('System/handle')}">
+    <form method="post" enctype="multipart/form-data" id="handlepost" action="{:url('System/handle')}">
         <input type="hidden" name="form_submit" value="ok" />
         <div class="ncap-form-default">
             <dl class="row">
                 <dt class="tit">分销开关</dt>
                 <dd class="opt">
                     <div class="onoff">
-                        <label for="switch1" class="cb-enable  <if condition="$config['switch'] eq 1">selected</if>">开启</label>
-                        <label for="switch0" class="cb-disable <if condition="$config['switch'] eq 0">selected</if>">关闭</label>
-                        <input type="radio" onclick="$('#switch_on_off').show();"  id="switch1"  name="switch" value="1" <if condition="$config['switch'] eq 1">checked="checked"</if>>
-                        <input type="radio" onclick="$('#switch_on_off').hide();" id="switch0" name="switch" value="0" <if condition="$config['switch'] eq 0">checked="checked"</if> >
+                        <label for="switch1" class="cb-enable  {if condition="$config.switch eq 1"}selected{/if}">开启</label>
+                        <label for="switch0" class="cb-disable {if condition="$config.switch eq 0"}selected{/if}">关闭</label>
+                        <input type="radio" onclick="$('#switch_on_off').show();"  id="switch1"  name="switch" value="1" {if condition="$config.switch eq 1"}checked="checked"{/if}>
+                        <input type="radio" onclick="$('#switch_on_off').hide();" id="switch0" name="switch" value="0" {if condition="$config.switch eq 0"}checked="checked"{/if} >
                     </div>
                 </dd>
             </dl>
-            <div id="switch_on_off" <if condition="$config['switch'] eq 0">style="display: none;"</if>>
+            <div id="switch_on_off" {if condition="$config.switch eq 0"}style="display: none;"{/if}>
             <dl class="row">
                 <dt class="tit">
                     <label>成为分销商条件</label>
                 </dt>
                 <dd class="opt">
-                    <input type="radio" name="condition" value="0" <if condition="$config[condition] eq 0">checked="checked"</if>>无条件成为分销商 &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="condition" value="1" <if condition="$config[condition] eq 1">checked="checked"</if>>需购买商品后成为分销商 &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="condition" value="0" {if condition="$config.condition eq 0"}checked="checked"{/if}>无条件成为分销商 &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="condition" value="1" {if condition="$config.condition eq 1"}checked="checked"{/if}>需购买商品后成为分销商 &nbsp;&nbsp;&nbsp;&nbsp;
                     <!--<input type="radio" name="condition" value="2" <if condition="$config[condition] eq 2">checked="checked"</if>>需提交申请审核 &nbsp;&nbsp;&nbsp;&nbsp;-->
                 </dd>
             </dl>
@@ -58,20 +58,20 @@
                 </dt>
                 <dd class="opt">
                     <select name="pattern" id="distribut_pattern">
-                        <option value="0" <if condition="$config['pattern'] eq 0">selected="selected"</if>>按商品设置的分成金额</option>
-                        <option value="1" <if condition="$config['pattern'] eq 1">selected="selected"</if>>按订单设置的分成比例</option>
+                        <option value="0" {if condition="$config.pattern eq 0"}selected="selected"{/if}>按商品设置的分成金额</option>
+                        <option value="1" {if condition="$config.pattern eq 1"}selected="selected"{/if}>按订单设置的分成比例</option>
                     </select>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <label for="distribut_date">返佣级数</label> 
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    
                     <select name="regrade" id="regrade">
-						<option value="0" <if condition="$config['regrade'] eq 0">selected="selected"</if>>返一级</option>
-						<option value="1" <if condition="$config['regrade'] eq 1">selected="selected"</if>>返两级</option>
-						<option value="2" <if condition="$config['regrade'] eq 2">selected="selected"</if>>返三级</option>
+						<option value="0" {if condition="$config.regrade eq 0"}selected="selected"{/if}>返一级</option>
+						<option value="1" {if condition="$config.regrade eq 1"}selected="selected"{/if}>返两级</option>
+						<option value="2" {if condition="$config.regrade eq 2"}selected="selected"{/if}>返三级</option>
                     </select>
                 </dd>
             </dl>
-            <dl class="row" id="distribut_order_rate" <if condition="$config['pattern'] eq 0">style="display:none"</if>>
+            <dl class="row" id="distribut_order_rate" {if condition="$config.pattern eq 0"}style="display:none"{/if}>
                 <dt class="tit">
                     <label>订单默认分成比例</label>
                 </dt>
@@ -123,9 +123,9 @@
                 </dt>
                 <dd class="opt">
                     <select name="date" id="distribut_date">
-                        <for start="1" end="31" name="i" >
-                            <option value="{$i}" <if condition="$config[date] eq $i">selected="selected"</if>>{$i}天</option>
-                        </for>
+                        {for start="1" end="31" name="i" }
+                            <option value="{$i}" {if condition="$config.date eq $i"}selected="selected"{/if}>{$i}天</option>
+                        {/for}
                     </select>
                     <p class="notic">订单收货确认后多少天可以分成</p>
                 </dd>

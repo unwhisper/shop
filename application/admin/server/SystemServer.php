@@ -8,13 +8,13 @@
 
 namespace app\admin\server;
 
-use app\common\model\Config;
+//use app\common\model\Config;
 use app\common\model\Region;
-use think\facade\Cache;
+//use think\facade\Cache;
 
 class SystemServer
 {
-    /**
+/*    /**
      * 系统配置
      * @param $inc_type
      * @param array $data
@@ -22,7 +22,7 @@ class SystemServer
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     */
+     *
     public function configCache($inc_type,$data = array())
     {
         $param = explode('.', $inc_type);
@@ -71,7 +71,7 @@ class SystemServer
             }
             Cache::set($param[0],$newData);
         }
-    }
+    }*/
 
     public function getProvince($province)
     {

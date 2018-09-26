@@ -39,7 +39,7 @@ class System extends Controller
             'water'     => '水印设置',
             'distribut' => '分销设置',
             'push'      => '推送设置',
-            'oss'       => '对象存储',
+            //'oss'       => '对象存储',
             'express'	=> '物流设置'
         ];
         $this->assign('group_list',$group_list);
@@ -49,7 +49,7 @@ class System extends Controller
             $inc_type =  $request::route('inc_type');
         }
         $this->assign('inc_type',$inc_type);
-        $config = $this->server->configCache($inc_type);
+        $config = configCache($inc_type);
         if($inc_type == 'shop_info'){
             $province = $this->server->getProvince(0);
             $city =  $this->server->getProvince($config['province']);
@@ -72,7 +72,7 @@ class System extends Controller
         $inc_type = $param['inc_type'];
         //unset($param['__hash__']);
         unset($param['inc_type']);
-        $this->server->configCache($inc_type,$param);
+        configCache($inc_type,$param);
 
         // 设置短信商接口
         if ($inc_type == 'sms'){
@@ -283,9 +283,8 @@ class System extends Controller
     }
 
     //发送测试邮件
-    public function send_email(){
-        $param = I('post.');
-//		tpCache($param['inc_type'],$param); //注释掉，不注释会出现重复写入数据库
+    public function send_email(Request $request){
+        $param = $request::post();
         $res = send_email($param['test_eamil'],'后台测试','测试发送验证码:'.mt_rand(1000,9999));
         exit(json_encode($res));
     }

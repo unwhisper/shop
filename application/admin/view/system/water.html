@@ -1,4 +1,4 @@
-<include file="public/layout" />
+{include file="public/layout" /}
 <style>
     .span_1 {
         float: left;
@@ -32,9 +32,9 @@
                 <h5>网站全局内容基本选项设置</h5>
             </div>
             <ul class="tab-base nc-row">
-                <foreach name="group_list" item="v" key="k">
-                    <li><a href="{:U('System/index',['inc_type'=> $k])}" <if condition="$k==$inc_type">class="current"</if>><span>{$v}</span></a></li>
-                </foreach>
+                {foreach $group_list as $k=>$v}
+                    <li><a href="{:url('System/index',['inc_type'=> $k])}" {if condition="$k==$inc_type"}class="current"{/if}><span>{$v}</span></a></li>
+                {/foreach}
             </ul>
         </div>
     </div>
@@ -47,17 +47,17 @@
             <li>系统平台全局设置,包括基础设置、购物、短信、邮件、水印和分销等相关模块。</li>
         </ul>
     </div>
-    <form method="post" id="handlepost" action="{:U('System/handle')}">
+    <form method="post" id="handlepost" action="{:url('System/handle')}">
         <input type="hidden" name="inc_type" value="{$inc_type}">
         <div class="ncap-form-default">
             <dl class="row">
                 <dt class="tit">商品图片添加水印</dt>
                 <dd class="opt">
                     <div class="onoff">
-                        <label for="is_mark1" class="cb-enable <if condition='$config[is_mark] eq 1'>selected</if>" >开启</label>
-                        <label for="is_mark0" class="cb-disable <if condition='$config[is_mark] eq 0'>selected</if>" >关闭</label>
-                        <input id="is_mark1" name="is_mark" value="1" <if condition="$config['is_mark'] eq 1">checked</if> type="radio">
-                        <input id="is_mark0" name="is_mark" value="0" <if condition="$config['is_mark'] eq 0">checked</if> type="radio">
+                        <label for="is_mark1" class="cb-enable {if condition='$config.is_mark eq 1'}selected{/if}" >开启</label>
+                        <label for="is_mark0" class="cb-disable {if condition='$config.is_mark eq 0'}selected{/if}" >关闭</label>
+                        <input id="is_mark1" name="is_mark" value="1" {if condition="$config.is_mark eq 1"}checked{/if} type="radio">
+                        <input id="is_mark0" name="is_mark" value="0" {if condition="$config.is_mark eq 0"}checked{/if} type="radio">
                     </div>
                     <p class="notic">商品图片添加水印</p>
                 </dd>
@@ -66,10 +66,10 @@
                 <dt class="tit">水印类型</dt>
                 <dd class="opt">
                     <div class="onoff">
-                        <label for="mark_type1" class="cb-enable <if condition="$config[mark_type] eq 'text'">selected</if>" >文字</label>
-                        <label for="mark_type0" class="cb-disable <if condition="$config[mark_type] eq 'img'">selected</if>" >图片</label>
-                        <input id="mark_type1" onclick="setwarter('text')" name="mark_type" value="text" <if condition="$config['mark_type'] eq 'text'">checked</if> type="radio">
-                        <input id="mark_type0" onclick="setwarter('img')" name="mark_type"  value="img" <if condition="$config['mark_type'] eq 'img'">checked</if> type="radio">
+                        <label for="mark_type1" class="cb-enable {if condition="$config.mark_type eq 'text'"}selected{/if}" >文字</label>
+                        <label for="mark_type0" class="cb-disable {if condition="$config.mark_type eq 'img'"}selected{/if}" >图片</label>
+                        <input id="mark_type1" onclick="setwarter('text')" name="mark_type" value="text" {if condition="$config.mark_type eq 'text'"}checked{/if} type="radio">
+                        <input id="mark_type0" onclick="setwarter('img')" name="mark_type"  value="img" {if condition="$config.mark_type eq 'img'"}checked{/if} type="radio">
                     </div>
                     <p class="notic">水印类型</p>
                 </dd>
@@ -168,15 +168,15 @@
                             <span class="span_1">
                                 <ul>
                                     <li><input type="radio" name="sel" value="1"
-                                        <if condition="$config['sel'] eq '1'">checked</if>
+                                        {if condition="$config.sel eq '1'"}checked{/if}
                                         >&nbsp;顶部居左
                                     </li>
                                     <li><input type="radio" name="sel" value="4"
-                                        <if condition="$config['sel'] eq '4'">checked</if>
+                                        {if condition="$config.sel eq '4'"}checked{/if}
                                         >&nbsp;中部居左
                                     </li>
                                     <li><input type="radio" name="sel" value="7"
-                                        <if condition="$config['sel'] eq '7'">checked</if>
+                                        {if condition="$config.sel eq '7'"}checked{/if}
                                         >&nbsp;底部居左
                                     </li>
                                 </ul>
@@ -184,15 +184,15 @@
                             <span class="span_1">
                                 <ul>
                                     <li><input type="radio" name="sel" value="2"
-                                        <if condition="$config['sel'] eq '2'">checked</if>
+                                        {if condition="$config.sel eq '2'"}checked{/if}
                                         >&nbsp;顶部居中
                                     </li>
                                     <li><input type="radio" name="sel" value="5"
-                                        <if condition="$config['sel'] eq '5'">checked</if>
+                                        {if condition="$config.sel eq '5'"}checked{/if}
                                         >&nbsp;中部居中
                                     </li>
                                     <li><input type="radio" name="sel" value="8"
-                                        <if condition="$config['sel'] eq '8'">checked</if>
+                                        {if condition="$config.sel eq '8'"}checked{/if}
                                         >&nbsp;底部居中
                                     </li>
                                 </ul>
@@ -200,15 +200,15 @@
                             <span class="span_1">
                                 <ul>
                                     <li><input type="radio" name="sel" value="3"
-                                        <if condition="$config['sel'] eq '3'">checked</if>
+                                        {if condition="$config.sel eq '3'"}checked{/if}
                                         >&nbsp;顶部居右
                                     </li>
                                     <li><input type="radio" name="sel" value="6"
-                                        <if condition="$config['sel'] eq '6'">checked</if>
+                                        {if condition="$config.sel eq '6'"}checked{/if}
                                         >&nbsp;中部居右
                                     </li>
                                     <li><input type="radio" name="sel" value="9"
-                                        <if condition="$config['sel'] eq '9'">checked</if>
+                                        {if condition="$config.sel eq '9'"}checked{/if}
                                         >&nbsp;底部居右
                                     </li>
                                 </ul>
@@ -228,11 +228,11 @@
         $('#handlepost').submit();
     }
 
-    $(document).ready(function(){
+    /*$(document).ready(function(){
         get_province();
-        var marktype = "{$config['mark_type']}";
+        var marktype = "{$config.mark_type}";
         setwarter(marktype);
-    });
+    });*/
 
 
     // 上传水印图片成功回调函数

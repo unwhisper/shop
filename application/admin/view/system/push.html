@@ -1,4 +1,4 @@
-<include file="public/layout" />
+{include file="public/layout" /}
 <body style="background-color: #FFF; overflow: auto;">
 <div id="append_parent"></div>
 <div id="ajaxwaitid"></div>
@@ -10,9 +10,9 @@
                 <h5>推送服务相关设置</h5>
             </div>
             <ul class="tab-base nc-row">
-                <foreach name="group_list" item="v" key="k">
-                    <li><a href="{:U('System/index',['inc_type'=> $k])}" <if condition="$k==$inc_type">class="current"</if>><span>{$v}</span></a></li>
-                </foreach>
+                {foreach $group_list as $k=>$v}
+                <li><a href="{:url('admin/System/index',['inc_type'=> $k])}" {if condition="$k==$inc_type"}class="current"{/if}><span>{$v}</span></a></li>
+                {/foreach}
             </ul>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <li>推送服务相关设置, 请从极光官网注册账户并获取相关信息。</li>
         </ul>
     </div>
-    <form method="post" id="handlepost" action="{:U('System/handle')}" enctype="multipart/form-data" name="form1">
+    <form method="post" id="handlepost" action="{:url('System/handle')}" enctype="multipart/form-data" name="form1">
         <input type="hidden" name="form_submit" value="ok" />
         <div class="ncap-form-default">
             <dl class="row">

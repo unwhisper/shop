@@ -12,6 +12,8 @@
 // 应用公共文件
 
 use think\Loader;
+use app\common\model\Config;
+use think\facade\Cache;
 
 Loader::addClassAlias([
    'SC' => 'app\common\facade\SC'
@@ -276,4 +278,129 @@ function get_rand_str($randLength=6,$addtime=1,$includenumber=0)
         $tokenvalue=$randStr.time();
     }
     return $tokenvalue;
+}
+
+/**
+ * 系统配置
+ * @param $inc_type
+ * @param array $data
+ * @return mixed
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\ModelNotFoundException
+ * @throws \think\exception\DbException
+ */
+function configCache($inc_type,$data = array())
+{
+    $param = explode('.', $inc_type);
+    if (empty($data)){
+        $config = Cache::get($param[0]);
+        if (empty($config)){
+            $res = Config::where('inc_type',$param[0])->select();
+            if ($res){
+                foreach($res as $k=>$val){
+                    $config[$val['name']] = $val['value'];
+                }
+                Cache::set($param[0],$config);
+            }
+        }
+        if(count($param)>1){
+            return $config[$param[1]];
+        }else{
+            return $config;
+        }
+    }else{
+        $result = Config::where('inc_type',$param[0])->select();
+        if ($result){
+            foreach($result as $val){
+                $temp[$val['name']] = $val['value'];
+            }
+            foreach ($data as $k=>$v){
+                $newArr = array('name'=>$k,'value'=>trim($v),'inc_type'=>$param[0]);
+                if(!isset($temp[$k])){
+                    Config::create($newArr);//新key数据插入数据库
+                }else{
+                    if($v!=$temp[$k])
+                        Config::where("name", $k)->update($newArr);//缓存key存在且值有变更新此项
+                }
+            }
+            //更新后的数据库记录
+            $newRes = Config::where('inc_type',$param[0])->select();
+            foreach ($newRes as $rs){
+                $newData[$rs['name']] = $rs['value'];
+            }
+        }else{
+            foreach($data as $k=>$v){
+                $newArr[] = array('name'=>$k,'value'=>trim($v),'inc_type'=>$param[0]);
+            }
+            Config::insertAll($newArr);
+            $newData = $data;
+        }
+        Cache::set($param[0],$newData);
+    }
+}
+
+/**
+ * 邮件发送
+ * @param $to
+ * @param string $subject
+ * @param string $content
+ * @return array
+ */
+function send_email($to,$subject='',$content=''){
+    //判断openssl是否开启
+    $openssl_funcs = get_extension_funcs('openssl');
+    if(!$openssl_funcs){
+        return array('status'=>-1 , 'msg'=>'请先开启openssl扩展');
+    }
+    $mail = new \PHPMailer\PHPMailer\PHPMailer();
+    $config = configCache('smtp');
+    $mail->CharSet  = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
+    $mail->isSMTP();
+    //Enable SMTP debugging
+    // 0 = off (for production use)
+    // 1 = client messages
+    // 2 = client and server messages
+    $mail->SMTPDebug = 0;
+    //调试输出格式
+    //$mail->Debugoutput = 'html';
+    //smtp服务器
+    $mail->Host = $config['smtp_server'];
+    //端口 - likely to be 25, 465 or 587
+    $mail->Port = $config['smtp_port'];
+
+    if($mail->Port == 465) $mail->SMTPSecure = 'ssl';// 使用安全协议
+    //Whether to use SMTP authentication
+    $mail->SMTPAuth = true;
+    //用户名
+    $mail->Username = $config['smtp_user'];
+    //密码
+    $mail->Password = $config['smtp_pwd'];
+    //Set who the message is to be sent from
+    $mail->setFrom($config['smtp_user']);
+    //回复地址
+    //$mail->addReplyTo('replyto@example.com', 'First Last');
+    //接收邮件方
+    if(is_array($to)){
+        foreach ($to as $v){
+            $mail->addAddress($v);
+        }
+    }else{
+        $mail->addAddress($to);
+    }
+
+    $mail->isHTML(true);// send as HTML
+    //标题
+    $mail->Subject = $subject;
+    //HTML内容转换
+    $mail->msgHTML($content);
+    //Replace the plain text body with one created manually
+    //$mail->AltBody = 'This is a plain-text message body';
+    //添加附件
+    //$mail->addAttachment('images/phpmailer_mini.png');
+    //send the message, check for errors
+    if (!$mail->send()) {
+        return array('status'=>-1 , 'msg'=>'发送失败: '.$mail->ErrorInfo);
+    } else {
+        return array('status'=>1 , 'msg'=>'发送成功');
+    }
 }
