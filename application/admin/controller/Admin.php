@@ -122,4 +122,16 @@ class Admin extends Controller
         $captcha = new Captcha();
         return $captcha->entry();
     }
+
+    public function ewe()
+    {
+        $server = RedisServer::getInstance(array('port'=>6379,'host'=>'127.0.0.1'),2);
+        $server->set('name','leijie');
+        $server->setex('class',60,'xixi');
+        $server->setnx('name','dfjf');
+        $server1 = RedisServer::getInstance(array('port'=>6379,'host'=>'127.0.0.1'),8);
+        $server1->set('name','leijie');
+        $server1->setex('class',60,'xixi');
+        $server1->setnx('name','dfjf');
+    }
 }

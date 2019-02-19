@@ -25,7 +25,7 @@ class AdminServer
         if (!$admin){
             return ajax_return(0,'账号错误');
         }
-        if (!$admin->password == md5(hash('sha512',$password))){
+        if ($admin->password != md5(hash('sha512',md5(hash('sha512',$password)).$admin->salt))){
             return ajax_return(0,'密码错误');
         }
         if ($admin->adminRole->act_list == '0' || empty($admin->adminRole->act_list)){
